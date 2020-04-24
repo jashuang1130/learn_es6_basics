@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		section > div {
+			height: 100px;
+			width: 100px;
+			background-color: red;
+			float: left;
+			margin: 3px;
+			cursor: pointer;
+		}
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script type="text/babel">
+		// use let to enforce block scoping in js
+
+    // var x = 10; // global
+    // if(x){
+    //   let x= 4; // local
+    // }
+    // console.log(x); // print 10
+
+		for(let i=0; i<10; i++){  // use let instead of var
+				var div = document.createElement('div');
+				div.onclick = function (){
+					alert(`you clicked on a box # ${i}`);
+				}
+				document.getElementsByTagName('section')[0].appendChild(div);
+		}
+		console.log("LET KEYWORD: DRAW SOME BOXES");
+
+		// const birthYear = 1988; // const will protect the declaration of vertain variables
+		// var birthYear = 1977;
+		// var age = new Date().getFullYear() - 1988;
+		// console.log(age);
+
+		function coldEnough(deg) {
+			const freezeTemp = 32;
+			if(freezeTemp <= deg){
+				return `${deg} is ABOVE freezing.`;
+			} else {
+				return `${deg} is BELOW freezing`;
+			}
+		}
+		console.log("CONST KEYWORD");
+		console.log(coldEnough(-10));
+		console.log(coldEnough(10));
+		console.log(coldEnough(40));
+
+		function createEmail(firstName, purchasePrice) {
+			var shipping = 5.95;
+			console.log(
+				`Hi ${firstName}, Thanks for buying from us!
+				 	Total: $${purchasePrice}
+					Shipping: $${shipping}
+					Grand Total: $${purchasePrice + shipping};
+				`
+			);
+		}
+		console.log("TEMPLATE STRINGS");
+		createEmail("Jason", 100)
+
+		// SPREAD OPERATOR
+		var cats = ["Tabby","Siamese","Persian"];
+		var dogs = ["Golden Retriever","Pug","Schnauzer"];
+
+		// we can append variable into array, but will show as string and array within array
+		// var animals = ["Whale","Giraffe","Snake", "Coyote", cats, dogs];
+
+		// Using spreak overator to add array elements to new array.
+		var animals = ["Whale","Giraffe","Snake", "Coyote", ...cats, ...dogs];
+		console.log("SPREAD OPERATOR");
+		console.log(animals);
+
+		// MAP
+		// map can hold key value pairs; map hashing?
+		// 1. use map for something other than a string as key
+		// 2. utilize key value pairs that are always the same values
+		// 3. need to iterate iin order. map object iterates its elements in insertion order
+		var course = new Map();
+		course.set("react", {description: 'ui'}); // set values
+		course.set("jest", {description: 'testing'});
+		console.log("MAP Objects");
+		console.log(course);
+		// CAN'T USE DOT NOTATION TO GET VALUE
+		// can't use DOT NOTATION to get value
+		console.log(course.get('react'));
+		console.log(course.get('react').description);
+
+		var details = new Map([
+			[new Date(), 'today'],
+			['items', [1,2]]
+		]);
+		console.log(details.size);
+
+		// methods on map object
+		details.forEach(function(item){
+			console.log(item);
+		});
+
+
+		// Set Objects - data in sets must be unique
+		var books = new Set();
+		books.add("Pride and Prejudice");
+		books.add("War and Piece")
+			.add("Oliver Twist");
+
+		console.log("SET Objects");
+		console.log(books);
+		console.log(`How many books? ${books.size}`);
+		console.log("Has Oliver Twist?", books.has("Oliver Twist"));
+		books.delete('Oliver Twist');
+		console.log("Has Oliver Twist still?", books.has("Oliver Twist"));
+
+		var data = [4,2,4,4,2,5,1,6,7,9,9,3,8];
+		var set = new Set(data);
+		console.log("data.length", data.length);
+		console.log("set.size", set.size);
+		console.log(set);
+
+		// For...of Loops
+		console.log("FOR...OF loops");
+		for (let letter of 'JavaScript') {
+			console.log(letter);
+		}
+
+		var topics = ["JavaScript", "Node", "React"];
+
+		for (let topic of topics) {
+			console.log(topic);
+		}
+
+		var topics = new Map();
+		topics.set("HTML", '/class/html');
+		topics.set("CSS", '/class/css');
+		topics.set("JavaScript", '/class/js');
+		topics.set("Node", '/class/node');
+
+		for (let topic of topics) {
+			console.log(topic);
+		}
+
+		for (let topic of topics.keys()) {
+			console.log(topic, "is the course name");
+		}
+
+		for (let topic of topics.values()) {
+			console.log("The course description can be found at ", topic);
+		}
+
+		for (let course of topics.entries()) {
+			console.log(course);
+		}
+
+  </script>
+	<title>Let Keyword</title>
+</head>
+<body>
+	<header>
+		<h3>ES6 Syntax</h3>
+		<ul>
+			<li>Use 'let' keyword to enforce block scoping</li>
+			<li>Use 'const' keyword to protect the declaration of vertain variables</li>
+			<li>Template strings allows you to use template languages to format your code with variables. `` and ${}</li>
+			<li>Spread operator '...' </li>
+			<li> Map objects new Map() </li>
+			<li> Set objects new Set() </li>
+			<li> For...of Loop </li>
+		</ul>
+		<h4>Why don' you click on a box</h4>
+	</header>
+	<section></section>
+</body>
+</html>
