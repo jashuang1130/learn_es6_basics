@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script type="text/babel">
+    console.log("Default Parameters");
+    function add(x=5, y=7){
+      console.log(x+y);
+    }
+    add();
+
+    function haveFun(activityName="hiking", time=3){
+      console.log(`Today I will go ${activityName} for ${time} hours.`);
+    }
+    haveFun();
+    haveFun("biking", 5);
+
+    console.log("Enhancing object literals");
+		// We're adding 1 to times because of JS zero based index
+		// OLD
+    // var cat = {
+    //   meow: function (times) {
+    //     console.log(Array(times + 1).join("meow"));
+    //   },
+    //   purr: function (times) {
+    //     console.log(Array(times + 1).join("purr"));
+    //   },
+    //   snore: function (times) {
+    //     console.log(Array(times + 1).join("snore"));
+    //   }
+    // }
+
+		// NEW VERSION FOR ES6 - use repeat()
+		var cat = {
+			meow(times) {
+				console.log("meow".repeat(times));
+			},
+			purr(times) {
+				console.log("purr".repeat(times));
+			},
+			snore(times) {
+				console.log("snore".repeat(times));
+			}
+		}
+    cat.meow(3);
+    cat.purr(5);
+    cat.snore(7);
+
+		// ARROW FUNCTIONS
+		console.log("Arrow Functions");
+		// var studentList = function(students){
+		// 	console.log(students);
+		// };
+
+		// will need () if we have two or more params
+		var studentList = students => console.log(students);
+
+		studentList(["Joe","Cindy","Jeanne"]);
+
+		// Arrow function and the 'this' scope
+		console.log("Arrow Function: 'this' scope ");
+		// Old ways
+		// var person = {
+		// 	first: "Doug",
+		// 	actions: ["bike","sleep","eat"],
+		// 	printActions: function(){
+		// 			// Approach 1: re-assign this to _this
+		// 			// var _this = this;
+		// 			// this.actions.forEach(function(action){
+		// 			// 	// since this was out of scope
+		// 			// 	var str = _this.first + " likes to " + action;
+		// 			// 	console.log(str);
+		// 			// });
+		//
+		// 			// Approach 2: using bind
+		// 			this.actions.forEach(function(action){
+		// 				var str = this.first + " likes to " + action;
+		// 				console.log(str);
+		// 			}.bind(this));
+		// 	}
+		// };
+
+		// New way with Arrow Function
+		var person = {
+			first: "Doug",
+			actions: ["bike","sleep","eat"],
+			printActions(){
+				this.actions.forEach(action => {
+					var str = this.first + " likes to " + action;
+					console.log(str);
+				});
+			}
+		};
+		person.printActions();
+
+		console.log("Destructuring assignments");
+		// DESTRUCTURING ASSIGNMENTS - gives us an easy way to extract data from arrays and objects
+		// and assign them to variables.
+		var cities = ["Spokane","Boston","New York","Seattle","Portland"]
+
+	</script>
+	<title>Default Parameters</title>
+</head>
+<body>
+</body>
+</html>
