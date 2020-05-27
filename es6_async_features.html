@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script> -->
+	<script>
+		// Write asynchronous code with a more syncrhonous looking code structure.
+
+		const delay = seconds => {
+			return new Promise (
+				resolve => setTimeout(resolve, seconds * 1000)
+			)
+		};
+
+		const countToFive = async() => {
+			console.log('zero secs');
+			await delay(1);
+			// await means that it's going to wait for the value of delay called
+			// with one second to be returned before executing any further.
+			// There is error handling. sometimes easier than debugging Promises
+			console.log('one second');
+			await delay(1);
+			console.log('two seconds');
+			await delay(3);
+			console.log('five seconds');
+		}
+		countToFive();
+
+		// const githubRequest = async(loginName) => {
+		// 	try {
+		// 		var response = await fetch(`https://api.github.com/users/${loginName}/followers`);
+		// 		var json = await response.json();
+		// 		var followerList = json.map(user => user.login);
+		// 		console.log(followerList);
+		// 	} catch(e) {
+		// 		console.log("Date didn't load ", e);
+		// 	}
+		// }
+		// githubRequest('jashuang1130');
+
+		// Make into anonymous functions and call as soon as page loads; self executing function
+		(async(loginName) => {
+			try {
+				var response = await fetch(`https://api.github.com/users/${loginName}/followers`);
+				var json = await response.json();
+				var followerList = json.map(user => user.login);
+				console.log(followerList);
+			} catch(e) {
+				console.log("Date didn't load ", e);
+			}
+		})('jashuang1130');
+
+	</script>
+	<title>Async & Wait and Async & Fetch</title>
+</head>
+<body>
+</body>
+</html>

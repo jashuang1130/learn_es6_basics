@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script type="text/babel">
+     // Promises have emerged in the S6 to help us deal with asynchronous behavior in JavaScript.
+     // When something is asynchronous it means that some sort of waiting is going on.
+
+     const delay = seconds => {
+			 return new Promise( (resolve, reject) => {
+				 // resolve is what's going to occur when ever the promise resolves or whenever it's successful
+				 // setTimeout(resolve, seconds * 1000)
+				 if(typeof seconds != 'number'){
+					 reject(new Error('Argument seconds must be a number'));
+				 }
+				 setTimeout(() => resolve(`${seconds} second delay is up`),
+				 		seconds * 1000
+				 )
+			 });
+     };
+		 // console.log("zero seconds");
+		 // delay(1).then( () => console.log("one second"));
+		 // delay(3).then( () => console.log("three seconds"));
+
+		 // delay(2).then( (msg) => console.log(msg));
+		 // delay(4).then( msg => console.log(msg));
+
+		 // then can be chained onto one another to execute some code in a row
+		 delay(2).then(msg => msg.toUpperCase())
+		 				 .then(msg => `${msg} !!!!`)
+						 .then(msg => console.log(msg));
+
+		 delay("10 minutes").then(msg => msg.toUpperCase())
+		 				 .then(msg => `${msg} !!!!`)
+						 .then(msg => console.log(msg));
+
+		 // Building Promises
+		 const spacePeople = () => {
+			 return new Promise((resolves, rejects) => {
+				 const api = "http://api.open-notify.org/astros.json";
+				 const request = new XMLHttpRequest();
+				 request.open("GET", api);
+				 request.onload = () => {
+					 if(request.status == 200){
+						 resolves(JSON.parse(request.response));
+					 } else {
+						 rejects(Error(request.statusText));
+					 }
+				 };
+				 request.onerror = err => rejects(err);
+				 request.send();
+			 });
+		 };
+		 spacePeople().then(
+			 spaceData => console.log(spaceData),
+			 err => console.error(
+				 new Error('Cannot load space people')
+			 )
+		 );
+
+		 // Use Fetch to load data and simplify API calls;
+		 // There are node packages that work with fetch. EX: node fetch, isomorphic fetch.
+		 // fetch('http://api.open-notify.org/astros.json')
+		 // 		.then(res => res.json())
+		 // 		.then(console.log)
+
+			const getPeopleInSpace = () =>
+				fetch('http://api.open-notify.org/astros.json')
+				 	.then(res => res.json());
+
+			// getPeopleInSpace()
+			// 		.then(console.log);
+
+			// Using fetch, we can return data using promises. they can be composed, reused and saved.
+			const spaceNames = () =>
+				getPeopleInSpace()
+						.then(json => json.people)
+						.then(people => people.map(p => p.name))
+						.then(names => names.join(', '));
+
+			spaceNames()
+					.then(console.log);
+
+	</script>
+	<title>Promises</title>
+</head>
+<body>
+</body>
+</html>
