@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script type="text/babel">
+
+		class Vehicle {
+			constructor(description, wheels){
+				this.description = description;
+				this.wheels = wheels;
+			}
+			describeYourself() {
+				console.log(`I am a ${this.description} with ${this.wheels} wheels.`);
+			}
+		}
+		var coolSkiVan = new Vehicle('cool ski van', 4);
+
+		coolSkiVan.describeYourself();
+
+		// Class Inheritance-  The idea of class inheritance is pretty simple.
+		// We create one super class and then we can extend this class for reuse in different ways.
+		class SemiTruck extends Vehicle {
+			constructor() {
+				super("semi truck", 18) // refer back to Vehicle class
+			}
+		}
+
+		var groceryStoreSemi = new SemiTruck();
+		groceryStoreSemi.describeYourself();
+
+		// Getter and Setters
+		// Getter is a method that gets the value of a specific property
+		// Setter is a method tht sets the value of a specific property.
+		var attendance = {
+			_list: [],
+			set addName(name) {
+				this._list.push(name);
+			},
+			get list() {
+				return this._list.join(", ");
+			}
+		};
+
+		attendance.addName = 'Jason';
+		console.log("List getter: ", attendance.list);
+		console.log("Underscore List: ", attendance._list);
+		attendance.addName = 'Liwei';
+		attendance.addName = 'Jon';
+		console.log("List getter", attendance.list);
+
+		console.log('=========== Classes ============');
+
+		class Hike {
+				constructor(distance, pace) {
+					this.distance = distance;
+					this.pace = pace;
+				}
+				get lengthInHours() {
+					return `${this.calcLength()} hours`;
+				}
+				calcLength() {
+					return this.distance/ this.pace;
+				}
+		};
+
+		const mtTallac = new Hike(10, 2);
+		console.log(mtTallac.lengthInHours);
+	</script>
+	<title>Classes</title>
+</head>
+<body>
+</body>
+</html>

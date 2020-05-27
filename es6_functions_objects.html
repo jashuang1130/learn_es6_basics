@@ -2,6 +2,7 @@
 <html>
 <head>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser-polyfill.js"></script>
 	<script type="text/babel">
     console.log("Default Parameters");
     function add(x=5, y=7){
@@ -96,7 +97,130 @@
 		console.log("Destructuring assignments");
 		// DESTRUCTURING ASSIGNMENTS - gives us an easy way to extract data from arrays and objects
 		// and assign them to variables.
-		var cities = ["Spokane","Boston","New York","Seattle","Portland"]
+		// var cities = ["Spokane","Boston","New York","Seattle","Portland"]
+		// cities[0];
+
+		// DESTRUCTURING
+		var [first,,,fourth,] = ["Spokane","Boston","New York","Seattle","Portland"]
+		console.log(first, fourth);
+
+		// var sandwitch = {
+		// 	title: "Reuben",
+		// 	price: 7,
+		// 	description:"Cleaveland's favorite sandwitch",
+		// 	ingredients: ['bread', 'corned beef','dressing','sauerkraut','cheese']
+		// }
+		// console.log(sandwitch.title);
+		// console.log(sandwitch.price);
+
+		// DESTRUCTURING with objects
+		var {title, price} = {
+			title: "Reuben",
+			price: 7,
+			description:"Cleaveland's favorite sandwitch",
+			ingredients: ['bread', 'corned beef','dressing','sauerkraut','cheese']
+		};
+		console.log(title);
+		console.log(price);
+
+		var vacation = {
+			destination: "Chile",
+			travelers: 2,
+			activity: "skiiing",
+			cost: 4000
+		};
+
+		function vacationMarketing({destination, activity}) {
+			return `Come to ${destination} and do some ${activity}`
+		}
+		console.log(vacationMarketing(vacation));
+
+
+		// Generators - new type of function that allows us to pause functions in the middle of execution,
+		//						  to be resumed later. Used when we're dealing with asynchronous event.
+		// Maybe it's an external event or maybe a timer.
+
+		function* director() {
+			yield "Three";
+			yield "Two";
+			yield "One";
+			yield "Action";
+		}
+
+		var action = director();
+		console.log(action.next().value); // to get value
+		console.log(action.next());
+		console.log(action.next());
+		console.log(action.next());
+		console.log(action.next());
+
+		// Timer Sample
+		function* eachItem(arr){
+			for(var i=0; i < arr.length; i++){
+				yield arr[i];
+			}
+		};
+
+		var letters = eachItem(["a","b","c","d","e","f","g"]);
+
+		var abcs = setInterval(function(){
+			var letter = letters.next();
+			if(letter.done){
+				clearInterval(abcs);
+				console.log("Now I know my ABC's");
+			} else {
+				console.log(letter.value);
+			}
+		}, 500);
+
+		// JavaScript Primitives - are types like numbers, strings, arrays, and objects.
+		// Symbol is a 	1. new primitives in ES6.
+		//    					2. often used as unique IDs.
+		//							3. define customized iteration behavior
+
+		// using factory function - function that creates things
+		const id = Symbol();
+		const courseInfo = {
+			title: "ES6",
+			topics: ["babel","syntax","functions","classes"],
+			id: "js-course"
+		};
+		courseInfo[id] = 41284;
+		console.log(courseInfo);
+		// Using symbols for iteration - Examine, define, and customized iteration
+		// Iterable - JS objects define their own iteration behavior
+		// Iterator - a standard way to produce a sequence of values
+		var title = "ES6";
+		console.log(typeof(title));
+		console.log(typeof title[Symbol.iterator]);
+
+		var iterateIt = title[Symbol.iterator]();
+		console.log(iterateIt.next());
+		console.log(iterateIt.next());
+		console.log(iterateIt.next());
+		console.log(iterateIt.next());
+
+		//Create own Iterator
+		function tableReady(arr){
+			var nextIndex = 0;
+			return {
+				next(){
+					if(nextIndex < arr.length) {
+						return {value: arr.shift(), done: false}
+					} else {
+						return {done: true}
+					}
+				}
+			}
+		}
+
+		var waitingList = ["Sarah","Heather","Anna","Meagan"];
+		var iterateList = tableReady(waitingList);
+		console.log(`${iterateList.next().value}, your table is ready`);
+		console.log(`${iterateList.next().value}, your table is ready`);
+		console.log(`${iterateList.next().value}, your table is ready`);
+		console.log(`${iterateList.next().value}, your table is ready`);
+		console.log(`Is this done? ${iterateList.next().done}`);
 
 	</script>
 	<title>Default Parameters</title>
